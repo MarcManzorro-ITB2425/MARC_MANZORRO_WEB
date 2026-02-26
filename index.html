@@ -1,171 +1,143 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Marc Manzorro | Técnico en Sistemas y Ciberseguridad</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marc Manzorro | Systems & Cybersecurity</title>
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
-    <!-- NAVBAR -->
-    <header class="navbar">
-        <div class="nav-container">
-            <div class="logo">MM</div>
-            <nav>
-                <ul class="nav-links">
-                    <li><a href="#inicio">Inicio</a></li>
-                    <li><a href="#sobre-mi">Sobre mí</a></li>
-                    <li><a href="#skills">Skills</a></li>
-                    <li><a href="#experiencia">Experiencia</a></li>
-                    <li><a href="#estudios">Estudios</a></li>
-                    <li><a href="#contacto">Contacto</a></li>
-                </ul>
-            </nav>
+<canvas id="particles"></canvas>
+<div class="cursor"></div>
+
+<header class="navbar">
+    <div class="nav-container">
+        <div class="logo">MM</div>
+
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#sobre-mi">Sobre mí</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#experiencia">Experiencia</a></li>
+                <li><a href="#estudios">Estudios</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
-    </header>
+    </div>
+</header>
 
-    <!-- HERO -->
-    <section id="inicio" class="hero section">
-        <div class="hero-content fade-in">
-            <h1>Marc Manzorro</h1>
-            <h2>Técnico en Administración de Sistemas y Ciberseguridad.</h2>
-            <div class="hero-buttons">
-                <a href="#experiencia" class="btn secondary">Ver Experiencia</a>
-                <a href="#contacto" class="btn primary">Contactar</a>
-            </div>
+<section id="inicio" class="hero section">
+    <div class="hero-content">
+        <h1>Marc Manzorro</h1>
+        <h2><span id="typing"></span></h2>
+        <div class="hero-buttons">
+            <a href="#experiencia" class="btn secondary magnetic">Ver Experiencia</a>
+            <a href="#contacto" class="btn primary magnetic">Contactar</a>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- SOBRE MI -->
-    <section id="sobre-mi" class="section">
-        <div class="container fade-in">
-            <h2 class="section-title">Sobre mí & Curiosidades</h2>
-            <p class="about-text">
-                Soy un estudiante de ASIXC residente en Montcada i Reixac. Además de mi pasión por la infraestructura tecnológica y la ciberseguridad, soy jugador de rugby. Este deporte me ha enseñado el valor real del compañerismo, la disciplina, el trabajo en equipo y la motivación por buscar siempre nuevos retos con actitud y responsabilidad.
-            </p>
-        </div>
-    </section>
+<section id="sobre-mi" class="section">
+<div class="container reveal">
+<h2 class="section-title">Sobre mí & Curiosidades</h2>
+<p>
+Soy un estudiante de ASIXC residente en Montcada i Reixac. Además de mi pasión por la infraestructura tecnológica y la ciberseguridad, soy jugador de rugby. Este deporte me ha enseñado el valor real del compañerismo, la disciplina, el trabajo en equipo y la motivación por buscar siempre nuevos retos con actitud y responsabilidad.
+</p>
+</div>
+</section>
 
-    <!-- SKILLS -->
-    <section id="skills" class="section">
-        <div class="container">
-            <h2 class="section-title fade-in">Skills</h2>
-            <div class="skills-grid">
+<section id="skills" class="section">
+<div class="container">
+<h2 class="section-title reveal">Skills</h2>
 
-                <div class="card fade-in">
-                    <h3>Sistemas e Infraestructura</h3>
-                    <p>Ubuntu, Ubuntu Server, Windows, Windows Server, AWS</p>
-                </div>
+<div class="skills-grid">
+<div class="card tilt reveal"><h3>Sistemas</h3><p>Ubuntu, Ubuntu Server, Windows, Windows Server, AWS</p></div>
+<div class="card tilt reveal"><h3>Redes</h3><p>Configuración equipos Cisco</p></div>
+<div class="card tilt reveal"><h3>Dev & Tools</h3><p>Git, VS Code, PyCharm, Ansible</p></div>
+<div class="card tilt reveal"><h3>Base de Datos</h3><p>MySQL (Administración SGBD)</p></div>
+<div class="card tilt reveal"><h3>Idiomas</h3><p>Inglés B2, Catalán Nativo, Castellano Nativo</p></div>
+<div class="card tilt reveal"><h3>Extra</h3><p>Carnet B, Disponibilidad traslado</p></div>
+</div>
 
-                <div class="card fade-in">
-                    <h3>Redes</h3>
-                    <p>Configuración de equipos Cisco</p>
-                </div>
+</div>
+</section>
 
-                <div class="card fade-in">
-                    <h3>Desarrollo y Herramientas</h3>
-                    <p>Git, VS Code, PyCharm, Ansible</p>
-                </div>
+<section id="experiencia" class="section">
+<div class="container">
+<h2 class="section-title reveal">Experiencia</h2>
+<div class="timeline">
 
-                <div class="card fade-in">
-                    <h3>Bases de Datos</h3>
-                    <p>MySQL (Administración de SGBD)</p>
-                </div>
+<div class="timeline-item reveal">
+<h3>Aramark (2025 - Actualidad)</h3>
+<p>Servicio de barra en eventos. Atención multilingüe en partidos del FC Barcelona.</p>
+</div>
 
-                <div class="card fade-in">
-                    <h3>Idiomas</h3>
-                    <p>Inglés (B2), Catalán (Nativo), Castellano (Nativo)</p>
-                </div>
+<div class="timeline-item reveal">
+<h3>CEPSA/MOEVE (2025)</h3>
+<p>Empleado Estación de Servicio.</p>
+</div>
 
-                <div class="card fade-in">
-                    <h3>Aptitudes Extra</h3>
-                    <p>Carnet B (Coche propio), Disponibilidad de traslado</p>
-                </div>
+<div class="timeline-item reveal">
+<h3>Monitor Infantil (2024)</h3>
+</div>
 
-            </div>
-        </div>
-    </section>
+</div>
+</div>
+</section>
 
-    <!-- EXPERIENCIA -->
-    <section id="experiencia" class="section">
-        <div class="container">
-            <h2 class="section-title fade-in">Experiencia Laboral</h2>
-            <div class="timeline">
+<section id="estudios" class="section">
+<div class="container reveal">
+<h2 class="section-title">Estudios</h2>
+<div class="card tilt">
+<h3>CFGS ASIX (Perfil Ciberseguridad)</h3>
+<p>Institut Tecnològic de Barcelona (2024 - Actualidad)</p>
+</div>
+<div class="card tilt">
+<h3>Bachillerato Tecnológico</h3>
+<p>Institut Montserrat Miró i Vilà (2022 - 2024)</p>
+</div>
+</div>
+</section>
 
-                <div class="timeline-item fade-in">
-                    <div class="timeline-content">
-                        <h3>Aramark (Marzo 2025 - Actualmente)</h3>
-                        <p>Servicio de barra en eventos. Atención al público en diferentes idiomas en partidos de fútbol del FC Barcelona.</p>
-                    </div>
-                </div>
+<section id="contacto" class="section">
+<div class="container contact-layout">
 
-                <div class="timeline-item fade-in">
-                    <div class="timeline-content">
-                        <h3>CEPSA/MOEVE (Junio 2025 - Septiembre 2025)</h3>
-                        <p>Empleado de Estación de Servicio.</p>
-                    </div>
-                </div>
+<div class="contact-info reveal">
 
-                <div class="timeline-item fade-in">
-                    <div class="timeline-content">
-                        <h3>Monitor de actividades infantiles (2024)</h3>
-                    </div>
-                </div>
+<div class="profile-circle">
+<img src="profile-placeholder.png" alt="Foto perfil">
+</div>
 
-            </div>
-        </div>
-    </section>
+<h3>Contacto</h3>
+<p>+34 683 44 43 27</p>
+<p>marcmanzorro3@gmail.com</p>
+<p>08110, Montcada i Reixac</p>
 
-    <!-- ESTUDIOS -->
-    <section id="estudios" class="section">
-        <div class="container fade-in">
-            <h2 class="section-title">Estudios</h2>
-            <div class="card">
-                <h3>CFGS Administración de Sistemas Informáticos en Red (Perfil Ciberseguridad)</h3>
-                <p>Institut Tecnològic de Barcelona (2024 - Actualidad)</p>
-            </div>
-            <div class="card">
-                <h3>Bachillerato Tecnológico</h3>
-                <p>Institut Montserrat Miró i Vilà (2022 - 2024)</p>
-            </div>
-        </div>
-    </section>
+</div>
 
-    <!-- CONTACTO -->
-    <section id="contacto" class="section">
-        <div class="container contact-layout">
+<div class="contact-form reveal">
+<form id="contactForm">
+<input type="text" placeholder="Nombre" required>
+<input type="email" placeholder="Email" required>
+<textarea rows="5" placeholder="Mensaje" required></textarea>
+<button class="btn primary magnetic">Enviar Mensaje</button>
+</form>
+</div>
 
-            <div class="contact-info fade-in">
+</div>
+</section>
 
-                <!-- FOTO PERFIL REEMPLAZABLE -->
-                <div class="profile-circle">
-                    <!-- Sustituir el src por tu foto -->
-                    <img src="profile-placeholder.png" alt="Foto de perfil">
-                </div>
-
-                <h3>Contacto</h3>
-                <p><strong>Teléfono:</strong> +34 683 44 43 27</p>
-                <p><strong>Email:</strong> marcmanzorro3@gmail.com</p>
-                <p><strong>Ubicación:</strong> 08110, Montcada i Reixac</p>
-            </div>
-
-            <div class="contact-form fade-in">
-                <form>
-                    <input type="text" placeholder="Nombre" required>
-                    <input type="email" placeholder="Email" required>
-                    <textarea rows="5" placeholder="Mensaje" required></textarea>
-                    <button type="submit" class="btn primary">Enviar Mensaje</button>
-                </form>
-            </div>
-
-        </div>
-    </section>
-
-    <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
