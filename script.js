@@ -1,144 +1,3 @@
-<<<<<<< HEAD
-const App = (() => {
-
-const initCursor = () => {
-const cursor = document.querySelector('.cursor');
-document.addEventListener('mousemove', e => {
-cursor.style.left = e.clientX + 'px';
-cursor.style.top = e.clientY + 'px';
-});
-};
-
-const initNavbar = () => {
-const navbar = document.querySelector('.navbar');
-window.addEventListener('scroll', () => {
-navbar.classList.toggle('scrolled', window.scrollY > 50);
-}, {passive:true});
-};
-
-const initReveal = () => {
-const observer = new IntersectionObserver(entries=>{
-entries.forEach(entry=>{
-if(entry.isIntersecting){
-entry.target.classList.add('active');
-}
-});
-},{threshold:0.2});
-
-document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
-};
-
-const initHamburger = () => {
-const burger = document.querySelector('.hamburger');
-const nav = document.querySelector('.nav-links');
-burger.addEventListener('click',()=>{
-nav.classList.toggle('active');
-});
-};
-
-const initTyping = () => {
-const text = "Técnico en Administración de Sistemas y Ciberseguridad.";
-const el = document.getElementById('typing');
-let i=0;
-const type = () => {
-if(i<text.length){
-el.innerHTML += text.charAt(i);
-i++;
-setTimeout(type,40);
-}
-};
-type();
-};
-
-const initParticles = () => {
-const canvas = document.getElementById('particles');
-const ctx = canvas.getContext('2d');
-
-let particlesArray;
-
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-window.addEventListener('resize',()=>{
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-init();
-});
-
-class Particle{
-constructor(){
-this.x=Math.random()*canvas.width;
-this.y=Math.random()*canvas.height;
-this.size=Math.random()*2;
-this.speedX=Math.random()*0.5-0.25;
-this.speedY=Math.random()*0.5-0.25;
-}
-update(){
-this.x+=this.speedX;
-this.y+=this.speedY;
-if(this.x<0||this.x>canvas.width)this.speedX*=-1;
-if(this.y<0||this.y>canvas.height)this.speedY*=-1;
-}
-draw(){
-ctx.fillStyle='#00f0ff';
-ctx.fillRect(this.x,this.y,this.size,this.size);
-}
-}
-
-function init(){
-particlesArray=[];
-for(let i=0;i<120;i++){
-particlesArray.push(new Particle());
-}
-}
-
-function animate(){
-ctx.clearRect(0,0,canvas.width,canvas.height);
-particlesArray.forEach(p=>{
-p.update();
-p.draw();
-});
-requestAnimationFrame(animate);
-}
-
-init();
-animate();
-};
-
-const initTilt = () => {
-document.querySelectorAll('.tilt').forEach(card=>{
-card.addEventListener('mousemove',e=>{
-const rect = card.getBoundingClientRect();
-const x = e.clientX - rect.left;
-const y = e.clientY - rect.top;
-const centerX = rect.width/2;
-const centerY = rect.height/2;
-const rotateX = ((y-centerY)/20);
-const rotateY = ((centerX-x)/20);
-card.style.transform=`rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-});
-card.addEventListener('mouseleave',()=>{
-card.style.transform="rotateX(0) rotateY(0)";
-});
-});
-};
-
-const init = () => {
-initCursor();
-initNavbar();
-initReveal();
-initHamburger();
-initTyping();
-initParticles();
-initTilt();
-};
-
-return {init};
-
-})();
-
-document.addEventListener('DOMContentLoaded', App.init);
-=======
 /**
  * MARC MANZORRO PORTFOLIO
  * Professional Systems & Cybersecurity
@@ -769,4 +628,337 @@ class MagneticElements {
     const x = e.clientX - rect.left - rect.width / 2;
     const y = e.clientY - rect.top - rect.height
   }
->>>>>>> 0202562 (aada)
+// Continuación de MagneticElements...
+
+  handleMove(e, el) {
+    const rect = el.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    
+    const strength = 0.3;
+    
+    el.style.transform = `translate(${x * strength}px, ${y * strength}px)`;
+  }
+
+  handleLeave(el) {
+    el.style.transform = '';
+    el.style.transition = 'transform 0.3s var(--ease-out-expo)';
+  }
+}
+
+// ============================================================
+// TEXT SCRAMBLE EFFECT
+// ============================================================
+
+class TextScramble {
+  constructor(el) {
+    this.el = el;
+    this.chars = '!<>-_\\/[]{}—=+*^?#________';
+    this.update = this.update.bind(this);
+  }
+
+  setText(newText) {
+    const oldText = this.el.innerText;
+    const length = Math.max(oldText.length, newText.length);
+    const promise = new Promise((resolve) => this.resolve = resolve);
+    
+    this.queue = [];
+    for (let i = 0; i < length; i++) {
+      const from = oldText[i] || '';
+      const to = newText[i] || '';
+      const start = Math.floor(Math.random() * 40);
+      const end = start + Math.floor(Math.random() * 40);
+      this.queue.push({ from, to, start, end });
+    }
+    
+    cancelAnimationFrame(this.frameRequest);
+    this.frame = 0;
+    this.update();
+    return promise;
+  }
+
+  update() {
+    let output = '';
+    let complete = 0;
+
+    for (let i = 0, n = this.queue.length; i < n; i++) {
+      let { from, to, start, end, char } = this.queue[i];
+      
+      if (this.frame >= end) {
+        complete++;
+        output += to;
+      } else if (this.frame >= start) {
+        if (!char || Math.random() < 0.28) {
+          char = this.randomChar();
+          this.queue[i].char = char;
+        }
+        output += `<span class="scramble-char">${char}</span>`;
+      } else {
+        output += from;
+      }
+    }
+
+    this.el.innerHTML = output;
+
+    if (complete === this.queue.length) {
+      this.resolve();
+    } else {
+      this.frameRequest = requestAnimationFrame(this.update);
+      this.frame++;
+    }
+  }
+
+  randomChar() {
+    return this.chars[Math.floor(Math.random() * this.chars.length)];
+  }
+}
+
+// ============================================================
+// SMOOTH SCROLL
+// ============================================================
+
+class SmoothScroll {
+  constructor() {
+    this.links = document.querySelectorAll('a[href^="#"]');
+    this.init();
+  }
+
+  init() {
+    this.links.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) {
+          const offset = 80; // navbar height
+          const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
+          
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  }
+}
+
+// ============================================================
+// TILT EFFECT FOR CARDS
+// ============================================================
+
+class TiltEffect {
+  constructor() {
+    this.cards = document.querySelectorAll('.feature-card, .skill-block, .edu-card, .timeline-content');
+    if (window.matchMedia('(pointer: coarse)').matches) return;
+    
+    this.init();
+  }
+
+  init() {
+    this.cards.forEach(card => {
+      card.addEventListener('mousemove', (e) => this.handleMove(e, card));
+      card.addEventListener('mouseleave', () => this.handleLeave(card));
+    });
+  }
+
+  handleMove(e, card) {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    const rotateX = (y - centerY) / 20;
+    const rotateY = (centerX - x) / 20;
+    
+    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
+  }
+
+  handleLeave(card) {
+    card.style.transform = '';
+    card.style.transition = 'transform 0.5s var(--ease-out-expo)';
+  }
+}
+
+// ============================================================
+// GLITCH EFFECT ON HOVER
+// ============================================================
+
+class GlitchEffect {
+  constructor() {
+    this.elements = document.querySelectorAll('.glitch');
+    this.init();
+  }
+
+  init() {
+    this.elements.forEach(el => {
+      el.setAttribute('data-text', el.textContent);
+    });
+  }
+}
+
+// ============================================================
+// TYPING EFFECT
+// ============================================================
+
+class TypingEffect {
+  constructor(element, text, speed = 100) {
+    this.element = element;
+    this.text = text;
+    this.speed = speed;
+    this.index = 0;
+  }
+
+  type() {
+    if (this.index < this.text.length) {
+      this.element.textContent += this.text.charAt(this.index);
+      this.index++;
+      setTimeout(() => this.type(), this.speed);
+    }
+  }
+
+  start() {
+    this.element.textContent = '';
+    this.type();
+  }
+}
+
+// ============================================================
+// DARK MODE DETECTION (para futuras expansiones)
+// ============================================================
+
+class ThemeManager {
+  constructor() {
+    this.prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    this.init();
+  }
+
+  init() {
+    // El sitio ya es dark por defecto, pero podemos escuchar cambios
+    this.prefersDark.addEventListener('change', (e) => {
+      if (!e.matches) {
+        // Usuario cambió a modo claro en sistema
+        console.log('Modo claro detectado - el sitio mantiene tema oscuro por diseño');
+      }
+    });
+  }
+}
+
+// ============================================================
+// PERFORMANCE MONITOR
+// ============================================================
+
+class PerformanceMonitor {
+  constructor() {
+    this.init();
+  }
+
+  init() {
+    // Reducir animaciones si el usuario prefiere movimiento reducido
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.style.setProperty('--transition-speed', '0.01ms');
+    }
+
+    // Pausar canvas cuando no es visible
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        // Pausar animaciones intensivas
+      }
+    });
+  }
+}
+
+// ============================================================
+// INITIALIZATION
+// ============================================================
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Inicializar gestor de idiomas primero (lo necesitan otros módulos)
+  window.langManager = new LanguageManager();
+  
+  // Inicializar todos los módulos
+  new CustomCursor();
+  new ParticleSystem();
+  new ScrollAnimations();
+  new MobileMenu();
+  new FormHandler();
+  new MagneticElements();
+  new SmoothScroll();
+  new TiltEffect();
+  new GlitchEffect();
+  new ThemeManager();
+  new PerformanceMonitor();
+
+  // Efecto de typing para el subtítulo del hero (opcional)
+  const heroSubtitle = document.querySelector('.hero-subtitle');
+  if (heroSubtitle && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const originalText = heroSubtitle.textContent;
+    heroSubtitle.textContent = '';
+    setTimeout(() => {
+      const typing = new TypingEffect(heroSubtitle, originalText, 30);
+      typing.start();
+    }, 1000);
+  }
+
+  // Preloader simple
+  const preloader = document.querySelector('.preloader');
+  if (preloader) {
+    window.addEventListener('load', () => {
+      preloader.classList.add('hidden');
+      setTimeout(() => preloader.remove(), 500);
+    });
+  }
+
+  console.log('%c Marc Manzorro Portfolio ', 'background: linear-gradient(135deg, #00f0ff, #7000ff); color: #000; padding: 10px 20px; font-weight: bold; font-family: monospace;');
+  console.log('%c Systems & Cybersecurity ', 'color: #00f0ff; font-family: monospace;');
+});
+
+// ============================================================
+// UTILIDADES GLOBALES
+// ============================================================
+
+// Debounce para eventos de scroll/resize
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
+
+// Throttle para eventos frecuentes
+function throttle(func, limit) {
+  let inThrottle;
+  return function(...args) {
+    if (!inThrottle) {
+      func.apply(this, args);
+      inThrottle = true;
+      setTimeout(() => inThrottle = false, limit);
+    }
+  };
+}
+
+// Detectar cuando elementos entran en viewport (alternativa simple)
+function isInViewport(element) {
+  const rect = element.getBoundingClientRect();
+  return (
+    rect.top >= 0 &&
+    rect.left >= 0 &&
+    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+  );
+}
+
+// Exportar para uso global si es necesario
+window.PortfolioUtils = {
+  debounce,
+  throttle,
+  isInViewport,
+  TextScramble,
+  TypingEffect
+};
